@@ -28,7 +28,8 @@ Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
 " integration with tmux (allows running bash commands in tmux splits)
-Plugin 'benmills/vimux'
+" Long time no use
+" Plugin 'benmills/vimux'
 
 " sharing registers between vims
 Plugin 'ardagnir/united-front'
@@ -47,6 +48,9 @@ Plugin 'tpope/vim-abolish'
 
 " snippet completion
 Plugin 'SirVer/ultisnips'
+
+" snippets for UltiSnips
+" Plugin 'honza/vim-snippets'
 
 " powerful targeting of text parts
 " makes targetting more naturally useful..
@@ -99,6 +103,18 @@ Plugin 'tpope/vim-surround'
 " airsline extension for tmux
 Plugin 'edkolev/tmuxline.vim'
 
+" Latex stuff
+Plugin 'lervag/vimtex'
+
+" VimWiki
+Plugin 'vimwiki/vimwiki'
+
+" VimWiki
+Plugin 'MatlabFilesEdition'
+
+" Managing navigation between vim and tmux
+Plugin 'christoomey/vim-tmux-navigator'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required by Vundle
 filetype plugin indent on    " required by Vundle
@@ -150,6 +166,7 @@ set incsearch
 " map the leader key
 nnoremap , <NOP>
 let mapleader = ","
+let maplocalleader = "`"
 
 " Switch between relative and absolute line numbers with leader-N
 function! NumberToggle()
@@ -250,7 +267,10 @@ nnoremap k gk
 
 " better escape
 imap jk <Esc>l
-imap jj <Esc>jl
+
+" jumping to head of current function
+nnoremap [f mf9[{zt
+nnoremap [b 'fzt
 
 " clever brackets
 imap <leader>( ()<Esc>i
@@ -295,6 +315,15 @@ source ~/.vim/pluginconfig/vim-ros.vim
 
 " config for tmuxline
 source ~/.vim/pluginconfig/tmuxline.vim
+
+" config for vimtex
+source ~/.vim/pluginconfig/vimtex.vim
+
+" config for VimWiki
+source ~/.vim/pluginconfig/vimwiki.vim
+
+" config for UltiSnips
+source ~/.vim/pluginconfig/ultisnips.vim
 
 " if exists, source .my.vimrc
 if !empty(glob("~/.my.vimrc"))

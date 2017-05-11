@@ -32,7 +32,22 @@ killp () {
   kill -9 "$1" > /dev/null 2> /dev/null
 }
 
+gitPullPush() {
+
+ branch=`git branch | grep \* | sed 's/\* \([a-Z]*\)/\1/'`
+
+ if [ $# -eq 0 ]; then
+  git pull origin "$branch"
+  git push origin "$branch"
+ else
+  git pull "$1" "$branch"
+  git push "$1" "$branch"
+ fi
+}
+
 alias sb="source ~/.bashrc"
+alias gppl="gitPullPush local"
+alias gppo="gitPullPush origin"
 
 # use ctags to generate code tags
 generateTags() {
@@ -115,7 +130,6 @@ bigExit() {
 
   else
 
-    killp "$(tmux display-message -p '#S')"
     tmux kill-session -t "$(tmux display-message -p '#S')"
 
   fi
@@ -129,7 +143,7 @@ source $GIT_PATH/linux-setup/submodules/tmuxinator/completion/tmuxinator.bash
 if [ "$USE_I3" = "true" ]; then
 
   # set keyboard repeat rate
-  xset r rate 350 35
+  xset r rate 350 55
 
   echo '#!/bin/bash
 echo '"$ROS_IP" > ~/.i3/ros_ip.sh
