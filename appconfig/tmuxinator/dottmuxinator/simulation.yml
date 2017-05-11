@@ -10,7 +10,7 @@ root: ~/
 # pre: sudo /etc/rc.d/mysqld start
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
-# pre_window: export UAV_NAME=uav1; clear
+pre_window: export UAV_NAME=uav11; clear
 
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
@@ -38,7 +38,11 @@ windows:
   - pixhawk:
       layout: even-vertical
       panes:
-        - sleep 4; spawn 11 --run --delete --enable-rangefinder --enable-ground-truth --enable-mobius --enable-bluefox --enable-gripper
+        - sleep 4; spawn 11 --run --delete --enable-rangefinder --enable-ground-truth --enable-mobius --enable-gripper
+  - odom:
+      layout: even-vertical
+      panes:
+        - sleep 11; rostopic echo /uav11/mbzirc_odom/new_odom 
   - tmux:
       layout: even-vertical
       panes:
