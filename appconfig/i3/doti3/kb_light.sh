@@ -3,6 +3,18 @@
 
 from sys import argv
 import dbus
+import subprocess
+
+def sendmessage(value):
+    string_message = "Keyboard brightness: %2.0f %%" % current_state
+
+    if value < 0.1:
+      string_message = "Keyboad brightness on MIN"
+    elif value > 99.9:
+      string_message = "Keyboad brightness on MAX"
+
+    subprocess.Popen(['notify-send', string_message])
+    return
 
 
 def kb_light_set(delta):
@@ -25,10 +37,14 @@ if __name__ == '__main__':
     if len(argv[1:]) == 1:
         if argv[1] == "--up" or argv[1] == "+":
             # ./kb-light.py (+|--up) to increment
-            print(kb_light_set(1))
+            current_state = kb_light_set(1)
+            sendmessage(current_state)
+            print(current_state)
         elif argv[1] == "--down" or argv[1] == "-":
             # ./kb-light.py (-|--down) to decrement
-            print(kb_light_set(-1))
+            current_state = kb_light_set(-1)
+            sendmessage(current_state)
+            print(current_state)
         else:
             print("Unknown argument:", argv[1])
     else:
