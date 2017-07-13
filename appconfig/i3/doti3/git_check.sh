@@ -3,14 +3,9 @@
 source ~/.bashrc
 
 REMOTE="origin"
-STATUS_FILE=".git_status"
+text_line=""
 
 cd ${GIT_PATH}
-
-if [ -f "/tmp/${STATUS_FILE}" ]; then
-  rm "/tmp/$STATUS_FILE"
-fi
-touch "/tmp/$STATUS_FILE"
 
 # create a list from GIT_REMOTES using delimiter 'white space'
 GIT_REMOTES_LIST=${GIT_REMOTES//,/$'\n'}  # change the ',' to white space
@@ -21,14 +16,14 @@ GIT_REMOTES_LIST=${GIT_REMOTES//,/$'\n'}  # change the ',' to white space
 
 # for each folder in GIT_REPOSITORY
 for D in *; do
-  
+
   # if is folder
   if [ -d "${D}" ]; then
     cd ${GIT_PATH}/${D}
-    
+
     # check if folder is git repository 
     if [ -d ".git" ]; then
-      
+
       # find if for this repository different remote should be check
       var_remote=$REMOTE
       for word in "$GIT_REMOTES_LIST"
@@ -40,16 +35,26 @@ for D in *; do
         fi
       done
       # echo "$D $var_remote"
-      
+
       # git fetch
       git fetch $var_remote &> /dev/null
-      state=`git status | head -2 | tail -1`
-      echo -e "${D}"": ""$state" >> "/tmp/$STATUS_FILE"
-    
+      repo_status=`git status | head -2 | tail -1`
+
+      # if repo_status start with text "Your branch is behind"
+      if [ "${repo_status:0:21}" == "Your branch is behind" ]; then
+
+        # if text_line is empty
+        if [ -z "${text_line// }"];then
+          text_line="$D" 
+        else
+          text_line="$text_line, $D" 
+        fi
+      fi
+
     fi
     cd ${GIT_PATH}
   fi
 done
 # fi
 
-cp "/tmp/$STATUS_FILE" .
+echo "$text_line"
