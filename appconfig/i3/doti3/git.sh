@@ -1,11 +1,10 @@
 #!/bin/bash
 
-source ~/.bashrc
-
 STATUS_FILE=".git_status"
 text_line=""
 
-cd ~/${GIT_PATH}
+# TODO: use environment variable $GIT_PATH
+cd ~/git
 
 # check if STATUS_FILE exists 
 if [ -f "${STATUS_FILE}" ]; then
