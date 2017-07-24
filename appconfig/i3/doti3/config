@@ -278,13 +278,18 @@ exec_always xmodmap -e "keysym Caps_Lock = Escape" # set caps_lock as escape
 # assing windows to particular workspaces
 # find the class name by running "xprop" in bash and then click on th window
 # copy the last item in the classname list
+<<<<<<< HEAD
 assign [class="Google-chrome"] $workspace1
+=======
+# assign [class="Google-chrome"] $workspace5
+>>>>>>> d1171f7754e28d3435863b9bb60f222a2bac405b
 assign [class="Rviz"] $workspace4
 
 # name = File Operation Progress == float
 for_window [class="^Thunar$"] floating disable
 for_window [class="^Tk$"] floating enable
 for_window [class="^Octave-gui$"] floating enable
+for_window [class="^Google-chrome$"] floating disabled
 
 # lock session
 bindsym $mod+Shift+x exec ~/.i3/shutdown_menu -p rofi
