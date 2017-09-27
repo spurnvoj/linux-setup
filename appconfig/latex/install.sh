@@ -4,20 +4,15 @@
 APP_PATH=`dirname "$0"`
 APP_PATH=`( cd "$APP_PATH" && pwd )`
 
-# install missing dependecies
-sudo apt-get install -y python3-setuptools
-
-default=y
+default=n
 while true; do
-  [[ -t 0 ]] && { read -t 5 -n 2 -p $'\e[1;32mInstall vimiv? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default ; }
+  [[ -t 0 ]] && { read -t 10 -n 2 -p $'\e[1;32mSet up for Latex development? [y/n] (default: '"$default"$')\e[0m\n' resp || resp=$default ; }
   response=`echo $resp | sed -r 's/(.*)$/\1=/'`
 
   if [[ $response =~ ^(y|Y)=$ ]]
   then
 
-    # link the configuration
-    cd $APP_PATH/../../submodules/vimiv/
-    sudo make install
+    sudo apt-get -y install texlive texlive-latex-extra texlive-lang-czechslovak texmaker
 
     break
   elif [[ $response =~ ^(n|N)=$ ]]
